@@ -1,11 +1,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PudelkoLibrary;
+using PudelkoLibrary.Enums;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 
-namespace PudelkoUnitTests
+namespace PudelkoTests
 {
 
     [TestClass]

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using PudelkoLibrary.Enums;
 
 namespace PudelkoLibrary
 {
@@ -24,11 +25,10 @@ namespace PudelkoLibrary
                     defaultVal = 10;
                     break;
             }
-            A = a ?? defaultVal;
-            B = b ?? defaultVal;
-            C = c ?? defaultVal;
-            this.unit = unit;
-            ConvertToMeters();
+            A = UnitOfMeasureHelper.Convert(a ?? defaultVal, unit, UnitOfMeasure.meter);
+            B = UnitOfMeasureHelper.Convert(b ?? defaultVal, unit, UnitOfMeasure.meter);
+            C = UnitOfMeasureHelper.Convert(c ?? defaultVal, unit, UnitOfMeasure.meter);
+            this.unit = UnitOfMeasure.meter;
             ValidateFields();
         }
 
@@ -48,16 +48,19 @@ namespace PudelkoLibrary
 
         public string ToString(string format)
         {
+            if (format == null) format = "m";
             return ToString(format, CultureInfo.CurrentCulture);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            UnitOfMeasure measure;
             try
             {
-                measure = EnumHelper.GetUnitFromFriendlyName(format);
-                return $"{A} {format} x {B} {format} x {C} {format}";
+                UnitOfMeasure measure = UnitOfMeasureHelper.GetUnitFromFriendlyName(format);
+                string a = UnitOfMeasureHelper.DimensionToString(UnitOfMeasureHelper.Convert(A, unit, measure), measure),
+                       b = UnitOfMeasureHelper.DimensionToString(UnitOfMeasureHelper.Convert(B, unit, measure), measure),
+                       c = UnitOfMeasureHelper.DimensionToString(UnitOfMeasureHelper.Convert(C, unit, measure), measure);
+                return $"{a} {format} × {b} {format} × {c} {format}";
             }
             catch (ArgumentException e)
             {
@@ -126,28 +129,6 @@ namespace PudelkoLibrary
                 throw new ArgumentOutOfRangeException("Pudelko can't be larger than 10 meters!");
             }
         }
-
-        private const int PRECISION = 3;
-
-        private void ConvertToMeters()
-        {
-            int divideBy=1;
-            switch (unit)
-            {
-                case UnitOfMeasure.milimeter:
-                    divideBy = 1000;
-                    break;
-                case UnitOfMeasure.centimeter:
-                    divideBy = 100;
-                    break;
-            }
-            A = FixPrecision(A / divideBy, PRECISION);
-            B = FixPrecision(B / divideBy, PRECISION);
-            C = FixPrecision(C / divideBy, PRECISION);
-            unit = UnitOfMeasure.meter;
-        }
-
-        private double FixPrecision(double d, int precision) => Math.Floor(d * Math.Pow(10, precision)) / Math.Pow(10, precision);
     }
 
     public class PudelkoEnumerator : IEnumerator<double>
