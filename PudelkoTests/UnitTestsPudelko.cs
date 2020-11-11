@@ -485,7 +485,42 @@ namespace PudelkoTests
         #endregion
 
         #region Equals ===========================================
-        // ToDo
+
+        [TestMethod, TestCategory("Equals")]
+        public void Equals()
+        {
+            double[] dimensions = new double[] { 3.2, 1.21, 0.5 };
+            Pudelko[] p = new Pudelko[]{
+                new Pudelko(dimensions[0], dimensions[1], dimensions[2]),
+                new Pudelko(dimensions[0], dimensions[2], dimensions[1]),
+                new Pudelko(dimensions[1], dimensions[0], dimensions[2]),
+                new Pudelko(dimensions[1], dimensions[2], dimensions[0]),
+                new Pudelko(dimensions[2], dimensions[1], dimensions[0]),
+                new Pudelko(dimensions[2], dimensions[0], dimensions[1]),
+                new Pudelko(dimensions[1]*100, dimensions[2]*100, dimensions[0]*100, UnitOfMeasure.centimeter),
+                new Pudelko(dimensions[2]*1000, dimensions[1]*1000, dimensions[0]*1000, UnitOfMeasure.milimeter),
+            };
+            Pudelko notSamePudelko = new Pudelko(1.22, 0.55, 3.2, UnitOfMeasure.meter);
+            foreach(var pudelko in p)
+            {
+                foreach(var pudelko2 in p)
+                {
+                    Assert.IsTrue(pudelko.Equals(pudelko2));
+                    Assert.IsFalse(pudelko.Equals(notSamePudelko));
+                }
+            }
+        }
+
+        [TestMethod, TestCategory("Equals")]
+        public void Equals_Operators()
+        {
+            Pudelko p1 = new Pudelko(),
+                    p2 = new Pudelko(100, 100, 100, UnitOfMeasure.milimeter),
+                    p3 = new Pudelko(12, unit: UnitOfMeasure.centimeter);
+            Assert.IsTrue(p1 == p2);
+            Assert.IsTrue(p2 != p3);
+        }
+
         #endregion
 
         #region Operators overloading ===========================

@@ -69,9 +69,19 @@ namespace PudelkoLibrary
             }
         }
 
-        public bool Equals(Pudelko other)
+        public bool Equals(Pudelko other) => Pole == other.Pole && Objetosc == other.Objetosc;
+        public static bool operator==(Pudelko p1, Pudelko p2)
         {
-            return A == other.A && B == other.B && C == other.C && unit == other.unit;
+            return p1.Equals(p2);
+        }
+        public static bool operator !=(Pudelko p1, Pudelko p2)
+        {
+            return !p1.Equals(p2);
+        }
+
+        public override int GetHashCode()
+        {
+            return A.GetHashCode() + B.GetHashCode() + C.GetHashCode() + unit.GetHashCode();
         }
 
         public IEnumerator<double> GetEnumerator()
