@@ -34,7 +34,7 @@ namespace PudelkoLibrary
         }
 
         public double Objetosc { get => Math.Round(A * B * C, 9); }
-        public double Pole { get => 2 * A * B + 2 * A * C + 2 * B * C; }
+        public double Pole { get => Math.Round(2 * A * B + 2 * A * C + 2 * B * C, 6); }
 
         public static explicit operator Pudelko(double[] p) => new Pudelko(p[0], p[1], p[2]);
         public static explicit operator double[](Pudelko p) => new double[] { p.A, p.B, p.C };

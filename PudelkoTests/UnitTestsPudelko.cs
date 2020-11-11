@@ -472,6 +472,16 @@ namespace PudelkoTests
             Assert.AreEqual(expectedVolume, p.Objetosc);
         }
 
+        [DataTestMethod, TestCategory("Field, Volume")]
+        [DataRow(null, null, null, UnitOfMeasure.meter, 0.06)]
+        [DataRow(null, 42.1, 132.9, UnitOfMeasure.centimeter, 1.469018)]
+        [DataRow(1005.0, 421.5, 5321.9, UnitOfMeasure.milimeter, 16.021702)]
+        public void Field(double? a, double? b, double? c, UnitOfMeasure unit, double expectedVolume)
+        {
+            Pudelko p = new Pudelko(a, b, c, unit);
+            Assert.AreEqual(expectedVolume, p.Pole);
+        }
+
         #endregion
 
         #region Equals ===========================================
