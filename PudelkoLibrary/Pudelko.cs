@@ -39,11 +39,11 @@ namespace PudelkoLibrary
         public static explicit operator double[](Pudelko p) => new double[] { p.A, p.B, p.C };
         public static implicit operator ValueTuple<double, double, double>(Pudelko p) => (p.A, p.B, p.C);
         public static implicit operator Pudelko(ValueTuple<double, double, double> p) =>
-            new Pudelko(p.Item1, p.Item2, p.Item3);
+            new Pudelko(p.Item1, p.Item2, p.Item3, UnitOfMeasure.milimeter);
 
         public override string ToString()
         {
-            return ToString("A B C");
+            return ToString("m");
         }
 
         public string ToString(string format)
@@ -53,10 +53,16 @@ namespace PudelkoLibrary
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            string measure = unit.ToString();
-            return format.Replace("A", A.ToString() + measure)
-                .Replace("B", B.ToString() + measure)
-                .Replace("C", C.ToString() + measure);
+            UnitOfMeasure measure;
+            try
+            {
+                measure = EnumHelper.GetUnitFromFriendlyName(format);
+                return $"{A} {format} x {B} {format} x {C} {format}";
+            }
+            catch (ArgumentException e)
+            {
+                throw new FormatException(e.Message);
+            }
         }
 
         public bool Equals(Pudelko other)
