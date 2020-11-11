@@ -154,13 +154,13 @@ namespace PudelkoLibrary
             pudelko = p;
         }
 
-        public object Current => pudelko[index];
-        double IEnumerator<double>.Current => pudelko[index];
+        public object Current => pudelko[index++];
+        double IEnumerator<double>.Current => pudelko[index++];
 
 
         public bool MoveNext()
         {
-            return index++ < 2;
+            return index < 2;
         }
 
         public void Reset()
