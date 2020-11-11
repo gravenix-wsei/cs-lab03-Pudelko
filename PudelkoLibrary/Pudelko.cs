@@ -36,9 +36,7 @@ namespace PudelkoLibrary
         public double Objetosc { get => Math.Round(A * B * C, 9); }
         public double Pole { get => Math.Round(2 * A * B + 2 * A * C + 2 * B * C, 6); }
 
-        public static explicit operator Pudelko(double[] p) => new Pudelko(p[0], p[1], p[2]);
         public static explicit operator double[](Pudelko p) => new double[] { p.A, p.B, p.C };
-        public static implicit operator ValueTuple<double, double, double>(Pudelko p) => (p.A, p.B, p.C);
         public static implicit operator Pudelko(ValueTuple<double, double, double> p) =>
             new Pudelko(p.Item1, p.Item2, p.Item3, UnitOfMeasure.milimeter);
 
@@ -70,14 +68,8 @@ namespace PudelkoLibrary
         }
 
         public bool Equals(Pudelko other) => Pole == other.Pole && Objetosc == other.Objetosc;
-        public static bool operator==(Pudelko p1, Pudelko p2)
-        {
-            return p1.Equals(p2);
-        }
-        public static bool operator !=(Pudelko p1, Pudelko p2)
-        {
-            return !p1.Equals(p2);
-        }
+        public static bool operator==(Pudelko p1, Pudelko p2) => p1.Equals(p2);
+        public static bool operator !=(Pudelko p1, Pudelko p2) => !p1.Equals(p2);
 
         public override int GetHashCode()
         {
