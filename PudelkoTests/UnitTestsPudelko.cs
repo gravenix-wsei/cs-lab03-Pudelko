@@ -524,7 +524,20 @@ namespace PudelkoTests
         #endregion
 
         #region Operators overloading ===========================
-        // ToDo
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow(3, 4, 5, UnitOfMeasure.meter, 4, 6, 8)]
+        [DataRow(30, 20, 2, UnitOfMeasure.centimeter, 1.02, 2.2, 3.3)]
+        [DataRow(1, 3000, 2, UnitOfMeasure.milimeter, 1.001, 2.002, 6)]
+        public void Operators_Adding(double a, double b, double c, UnitOfMeasure unit, double exA, double exB, double exC)
+        {
+            Pudelko add = new Pudelko(2, 3, 1),
+                    expected = new Pudelko(exA, exB, exC),
+                    result = new Pudelko(a, b, c, unit) + add;
+            Assert.AreEqual(expected, result);
+
+        }
+
         #endregion
 
         #region Conversions =====================================
@@ -577,6 +590,16 @@ namespace PudelkoTests
         #endregion
 
         #region Parsing =========================================
+
+        [DataTestMethod]
+        //[DataRow("2.500 m × 9.321 m × 0.100 m")]
+        [DataRow("250 cm × 932.1 cm × 10 cm")]
+        [DataRow("2500 mm × 9321 mm × 100 mm")]
+        public void Parsing(string parseString)
+        {
+            Pudelko expected = new Pudelko(2500, 9321, null, UnitOfMeasure.milimeter);
+            Assert.AreEqual(expected, Pudelko.Parse(parseString));
+        }
 
         #endregion
 

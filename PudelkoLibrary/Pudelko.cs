@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using PudelkoLibrary.Enums;
 
 namespace PudelkoLibrary
@@ -67,9 +68,37 @@ namespace PudelkoLibrary
             }
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is Pudelko)
+            {
+                return Equals((Pudelko)obj);
+            }
+            return base.Equals(obj);
+        }
         public bool Equals(Pudelko other) => Pole == other.Pole && Objetosc == other.Objetosc;
         public static bool operator==(Pudelko p1, Pudelko p2) => p1.Equals(p2);
-        public static bool operator !=(Pudelko p1, Pudelko p2) => !p1.Equals(p2);
+        public static bool operator!=(Pudelko p1, Pudelko p2) => !p1.Equals(p2);
+
+        public static Pudelko Parse(string parse)
+        {
+            Regex reg = new Regex(@"(?<a>\d+\.?\d*)\s(?<format>\w+).*?(?<b>\d+\.?\d*)\s\w+.*?(?<c>\d+\.?\d*)\s\w+");
+            Match match = reg.Match(parse);
+            return new Pudelko(
+                Double.Parse(match.Groups["a"].Value),
+                Double.Parse(match.Groups["b"].Value),
+                Double.Parse(match.Groups["c"].Value),
+                UnitOfMeasureHelper.GetUnitFromFriendlyName(match.Groups["format"].Value)
+            );
+        }
+
+        public static Pudelko operator+(Pudelko p1, Pudelko p2)
+        {
+            double[] _p1 = (double[])p1, _p2 = (double[])p2;
+            Array.Sort(_p1);
+            Array.Sort(_p2);
+            return new Pudelko(_p1[0] + _p2[0], _p1[1] + _p2[1], _p1[2] + _p2[2]);
+        }
 
         public override int GetHashCode()
         {
