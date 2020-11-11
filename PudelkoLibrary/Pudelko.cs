@@ -9,9 +9,10 @@ namespace PudelkoLibrary
     public sealed class Pudelko : IFormattable, IEquatable<Pudelko>, IEnumerable<double>
     {
         private UnitOfMeasure unit { get; }
-        public double A { get; }
-        public double B { get; }
-        public double C { get; }
+        private double a, b, c;
+        public double A { get => Convert.ToDouble(a.ToString("0.000")); private set { a = value; } }
+        public double B { get => Convert.ToDouble(b.ToString("0.000")); private set { b = value; } }
+        public double C { get => Convert.ToDouble(c.ToString("0.000")); private set { c = value; } }
 
         public Pudelko(double? a = null, double? b = null, double? c = null, UnitOfMeasure unit = UnitOfMeasure.meter)
         {
@@ -32,7 +33,7 @@ namespace PudelkoLibrary
             ValidateFields();
         }
 
-        public double Objetosc { get => A * B * C; }
+        public double Objetosc { get => Math.Round(A * B * C, 9); }
         public double Pole { get => 2 * A * B + 2 * A * C + 2 * B * C; }
 
         public static explicit operator Pudelko(double[] p) => new Pudelko(p[0], p[1], p[2]);
@@ -60,7 +61,7 @@ namespace PudelkoLibrary
                 string a = UnitOfMeasureHelper.DimensionToString(UnitOfMeasureHelper.Convert(A, unit, measure), measure),
                        b = UnitOfMeasureHelper.DimensionToString(UnitOfMeasureHelper.Convert(B, unit, measure), measure),
                        c = UnitOfMeasureHelper.DimensionToString(UnitOfMeasureHelper.Convert(C, unit, measure), measure);
-                return $"{a} {format} × {b} {format} × {c} {format}";
+                return $"{a} {format} \u00D7 {b} {format} \u00D7 {c} {format}";
             }
             catch (ArgumentException e)
             {

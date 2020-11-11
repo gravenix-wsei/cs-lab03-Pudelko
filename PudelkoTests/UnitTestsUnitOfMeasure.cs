@@ -9,7 +9,7 @@ namespace PudelkoTests
     [TestClass]
     public class UnitTestsUnitOfMeasure
     {
-        [TestMethod]
+        [DataTestMethod]
         [DataRow(UnitOfMeasure.meter, 3)]
         [DataRow(UnitOfMeasure.centimeter, 1)]
         [DataRow(UnitOfMeasure.milimeter, 0)]
@@ -18,7 +18,7 @@ namespace PudelkoTests
             Assert.AreEqual(UnitOfMeasureHelper.GetPrecisionForUnit(u), expectedPrecision);
         }
 
-        [TestMethod]
+        [DataTestMethod]
         [DataRow(1.234, UnitOfMeasure.meter, UnitOfMeasure.milimeter, 1234.0)]
         [DataRow(1.234, UnitOfMeasure.meter, UnitOfMeasure.centimeter, 123.4)]
         [DataRow(1.234, UnitOfMeasure.meter, UnitOfMeasure.meter, 1.234)]
@@ -30,7 +30,7 @@ namespace PudelkoTests
             Assert.AreEqual(expected, UnitOfMeasureHelper.Convert(val, from, to));
         }
 
-        [TestMethod]
+        [DataTestMethod]
         [DataRow(132.23, UnitOfMeasure.centimeter, "132.2")]
         [DataRow(5132.53, UnitOfMeasure.milimeter, "5132")]
         [DataRow(2.909, UnitOfMeasure.meter, "2.909")]

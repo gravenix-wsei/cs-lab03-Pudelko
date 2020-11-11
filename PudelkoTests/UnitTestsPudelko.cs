@@ -413,6 +413,17 @@ namespace PudelkoTests
 
         #endregion
 
+        #region Properties tests =================================
+
+        [TestMethod, TestCategory("Properties")]
+        public void Properties_CorrectForm()
+        {
+            Pudelko p = new Pudelko(a: 122.3336, b: 1.1, unit: UnitOfMeasure.centimeter);
+            AssertPudelko(p, 1.223, 0.011, 0.1);
+        }
+
+        #endregion
+
 
         #region ToString tests ===================================
 
@@ -448,7 +459,18 @@ namespace PudelkoTests
 
 
         #region Pole, Objętość ===================================
-        // ToDo
+        
+        [DataTestMethod, TestCategory("Field, Volume")]
+        [DataRow(null, null, null, UnitOfMeasure.meter, 0.001)]
+        [DataRow(5.0, 2.0, 3.0, UnitOfMeasure.meter, 30)]
+        [DataRow(500.2, null, 35.1, UnitOfMeasure.centimeter, 0.1755702)]
+        [DataRow(5250.0 , 1500.0, 500.0, UnitOfMeasure.milimeter, 3.9375)]
+        [DataRow(4352.9 , 1321.5, 7432.4, UnitOfMeasure.milimeter, 42.726508544)]
+        public void Volume(double? a, double? b, double? c, UnitOfMeasure unit, double expectedVolume)
+        {
+            Pudelko p = new Pudelko(a, b, c, unit);
+            Assert.AreEqual(expectedVolume, p.Objetosc);
+        }
 
         #endregion
 
