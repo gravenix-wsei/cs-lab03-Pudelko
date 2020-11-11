@@ -6,4 +6,10 @@
     <RootNamespace>cs_lab03_Pudelko</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PudelkoLibrary\PudelkoLibrary.csproj" />
+  </ItemGroup>
 </Project>
