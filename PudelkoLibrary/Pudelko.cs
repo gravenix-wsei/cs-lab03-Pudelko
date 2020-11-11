@@ -6,12 +6,12 @@ using PudelkoLibrary.Enums;
 
 namespace PudelkoLibrary
 {
-    public class Pudelko : IFormattable, IEquatable<Pudelko>, IEnumerable<double>
+    public sealed class Pudelko : IFormattable, IEquatable<Pudelko>, IEnumerable<double>
     {
-        private UnitOfMeasure unit;
-        public double A;
-        public double B;
-        public double C;
+        private UnitOfMeasure unit { get; }
+        public double A { get; }
+        public double B { get; }
+        public double C { get; }
 
         public Pudelko(double? a = null, double? b = null, double? c = null, UnitOfMeasure unit = UnitOfMeasure.meter)
         {
@@ -94,23 +94,6 @@ namespace PudelkoLibrary
                         throw new IndexOutOfRangeException("For Pudelko, you can use only 0-2 indexes!");
                 }
             }
-            set
-            {
-                switch (index)
-                {
-                    case 0:
-                        A = value;
-                        break;
-                    case 1:
-                        B = value;
-                        break;
-                    case 2:
-                        C = value;
-                        break;
-                    default:
-                        throw new IndexOutOfRangeException("For Pudelko, you can use only 0-2 indexes!");
-                }
-            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -134,7 +117,7 @@ namespace PudelkoLibrary
     public class PudelkoEnumerator : IEnumerator<double>
     {
         private int index = 0;
-        private Pudelko pudelko;
+        private readonly Pudelko pudelko;
 
         public PudelkoEnumerator(Pudelko p)
         {
