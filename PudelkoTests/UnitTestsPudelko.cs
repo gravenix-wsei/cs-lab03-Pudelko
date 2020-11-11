@@ -592,7 +592,7 @@ namespace PudelkoTests
         #region Parsing =========================================
 
         [DataTestMethod]
-        //[DataRow("2.500 m × 9.321 m × 0.100 m")]
+        [DataRow("2.500 m × 9.321 m × 0.100 m")]
         [DataRow("250 cm × 932.1 cm × 10 cm")]
         [DataRow("2500 mm × 9321 mm × 100 mm")]
         public void Parsing(string parseString)
